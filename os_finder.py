@@ -12,31 +12,53 @@ class OsFinder:
         self.ip = ip_address
     
     
-    def __str__(self,ip):
-        print(f" OsFinder Attack For {self.ip} ")
+    def __str__(self):
+        return f"OsFinder Attack For {self.ip}"
         
         
     def __call__(self):
         self.play_police_animation()
+    
         print("[red][ ..+.. ] Detected Operating System With TCP Options...[/red]")
-        self.TCP_Option_Analyze(ip_address)
-        Enter = input("Give me tcp option Values (İf you have no value please enter q  ): ")
+        self.TCP_Option_Analyze(self.ip)
+    
+        Enter = input(
+            "Give me tcp option Values "
+            "(If you have no value please enter q): "
+        )
+    
         if Enter == "q":
-            print("[red][ ..+.. ] Detected Operating System With Windows Size and TTL Value  ...[/red]")
-            self.Os_Detection(ip_address)
-
-            print("[red][ ..+.. ] Detected Operating System With Flag Response  ...[/red]")
-            self.flag_response(ip_address)
-            
+            print(
+                "[red][ ..+.. ] Detected Operating System "
+                "With Windows Size and TTL Value ...[/red]"
+            )
+            self.Os_Detection(self.ip)
+    
+            print(
+                "[red][ ..+.. ] Detected Operating System "
+                "With Flag Response ...[/red]"
+            )
+            self.flag_response(self.ip)
+    
         else:
-            options = ast.literal_eval(Enter)# Eval 2 +5 string verisini saki int gibi toplar ve sonucu döndürür x = 2 y = 5   result = eval("x+y")
-            print(self.guess_os_from_tcp_options(options))
-
-            print("[red][ ..+.. ] Detected Operating System With Windows Size and TTL Value  ...[/red]")
-            finder.Os_Detection(ip_address)
-
-            print("[red][ ..+.. ] Detected Operating System With Flag Response  ...[/red]")
-            self.flag_response(ip_address)
+            try:
+                options = ast.literal_eval(Enter)
+                print(self.guess_os_from_tcp_options(options))
+    
+                print(
+                    "[red][ ..+.. ] Detected Operating System "
+                    "With Windows Size and TTL Value ...[/red]"
+                )
+                self.Os_Detection(self.ip)
+    
+                print(
+                    "[red][ ..+.. ] Detected Operating System "
+                    "With Flag Response ...[/red]"
+                )
+                self.flag_response(self.ip)
+    
+            except (ValueError, SyntaxError) as e:
+                print(f"[red]Invalid TCP option format: {e}[/red]")
 
 
 
